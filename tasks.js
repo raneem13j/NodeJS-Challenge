@@ -68,7 +68,11 @@ function unknownCommand(c){
 function hello(){
   console.log('hello!')
 }
-/**lists commands */
+/**lists commands
+ * 
+ * @returns {Void}
+ */
+
 function help(){
   console.log('hello: says hello\n' + 'quit: Exits the application\n' + 'exit: Exits the application\n' + 'unknownCommand: This function is supposed to run when all other commands have failed\n' + 'node tasks.js: Starts tha application\n' + 'help: lists the commands')
 }
