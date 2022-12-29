@@ -33,24 +33,16 @@ function startApp(name){
  * @param  {string} text data typed by the user
  * @returns {void}
  */
-// function onDataReceived(text) {
-//   if (text === 'quit\n', text === 'exit\n') {
-//     quit();
-//   }
-//   else if(text === 'hello\n'){
-//     hello();
-//   }else if(text === 'help\n'){
-//     help();
-//   }
-//   else{
-//     unknownCommand(text);
-//   }
-// }
 function onDataReceived(text) {
   text = text.replace("\n","");
   let res = text.split(" ")[0];
   let x;
-  if (res == "hello"){
+  if (text === 'quit', text === 'exit') {
+    quit();
+  } else if(text === 'help'){
+    help();
+  }
+  else if (res == "hello"){
     if(text.split(" ")[1] == undefined){
       x= ""
     }else {
@@ -58,11 +50,27 @@ function onDataReceived(text) {
     }
     hello(x)
   }
- 
   else{
     unknownCommand(text);
   }
 }
+// function onDataReceived(text) {
+//   text = text.replace("\n","");
+//   let res = text.split(" ")[0];
+//   let x;
+//   if (res == "hello"){
+//     if(text.split(" ")[1] == undefined){
+//       x= ""
+//     }else {
+//       x = " " + text.split(" ")[1]
+//     }
+//     hello(x)
+//   }
+ 
+//   else{
+//     unknownCommand(text);
+//   }
+// }
 
 
 /**
@@ -92,7 +100,7 @@ function hello(x){
  */
 
 function help(){
-  console.log('hello: says hello\n' + 'quit: Exits the application\n' + 'exit: Exits the application\n' + 'unknownCommand: This function is supposed to run when all other commands have failed\n' + 'node tasks.js: Starts tha application\n' + 'help: lists the commands')
+  console.log('hello: says hello!\n' + "hello x: says hello x!\n" + 'quit: Exits the application\n' + 'exit: Exits the application\n' + 'unknownCommand: This function is supposed to run when all other commands have failed\n' + 'node tasks.js: Starts tha application\n' + 'help: lists the commands')
 }
 /**
  * Exits the application
