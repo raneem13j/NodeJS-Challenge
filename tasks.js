@@ -39,6 +39,8 @@ function onDataReceived(text) {
   }
   else if(text === 'hello\n'){
     hello();
+  }else if(text === 'help\n'){
+    help();
   }
   else{
     unknownCommand(text);
@@ -66,8 +68,10 @@ function unknownCommand(c){
 function hello(){
   console.log('hello!')
 }
-
-
+/**lists commands */
+function help(){
+  console.log('hello: says hello\n' + 'quit: Exits the application\n' + 'exit: Exits the application\n' + 'unknownCommand: This function is supposed to run when all other commands have failed\n' + 'node tasks.js: Starts tha application\n' + 'help: lists the commands')
+}
 /**
  * Exits the application
  *
