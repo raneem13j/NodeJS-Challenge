@@ -51,6 +51,11 @@ function onDataReceived(text) {
   let res = text.split(" ")[0];
   let x;
   if (res == "hello"){
+    if(text.split(" ")[1] == undefined){
+      x= ""
+    }else {
+      x = " " + text.split(" ")[1]
+    }
     hello(x)
   }
  
@@ -101,8 +106,3 @@ function quit(){
 
 // The following line starts the application
 startApp("Raneem Aljamal")
-// if(text.split(" ")[1] == undefined){
-//   x= ""
-// }else {
-//   x = " " + text.split(" ")[1]
-// }
