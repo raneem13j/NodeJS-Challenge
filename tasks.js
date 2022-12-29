@@ -1,4 +1,4 @@
-
+const fs = require('fs');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -17,7 +17,31 @@ function startApp(name){
   console.log("--------------------")
 }
 
+let counter = parseFloat(fs.readFileSync('data/counter.txt')) || 0
 
+// //.convert number. to base36-
+const toBase36 = number => parseInt(number).toString(36)
+
+// // convert number from base36-
+// const fromBase36 = number => parseInt(number, 36)
+
+// save: save current.list-
+// function save(data={}, file='data/data.json') {
+
+// }
+
+// load: load. from.JSON-
+function load(file='data/data.json') {
+const text = fs.readFileSync(file)
+return JSON.parse(
+text.length
+? text
+:'{}'
+)
+}
+const keywords = [
+  'all'
+]
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -35,13 +59,24 @@ function startApp(name){
  */
 function onDataReceived(text) {
   text = text.replace("\n","");
-  let res = text.split(" ")[0];
-  let x;
-  if (text === 'quit', text === 'exit') {
+  var array = text.split(" ")
+  let res = array[0];
+  array.shift()
+  let x = array.join(" ");
+  if (text === 'exit') {
+    quit();
+  }
+  else if(text === 'quit'){
     quit();
   }
   else if(text === 'help'){
     help();
+  }
+  else if(text === 'list'){
+    list();
+  }
+  else if(res === 'add'){
+    add(x);
   }
   else if (res == "hello"){
     if(text.split(" ")[1] == undefined){
@@ -55,25 +90,6 @@ function onDataReceived(text) {
     unknownCommand(text);
   }
 }
-// function onDataReceived(text) {
-//   text = text.replace("\n","");
-//   let res = text.split(" ")[0];
-//   let x;
-//   if (res == "hello"){
-//     if(text.split(" ")[1] == undefined){
-//       x= ""
-//     }else {
-//       x = " " + text.split(" ")[1]
-//     }
-//     hello(x)
-//   }
- 
-//   else{
-//     unknownCommand(text);
-//   }
-// }
-
-
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
@@ -111,6 +127,65 @@ function help(){
 function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
+}
+/**
+ * lists all tasks
+ * 
+ * @param {string} term 
+ * 
+ */
+  function list (term='all') {
+  let data = load()
+  let items = []
+  if (arguments.length > 0) {
+    if (keywords.includes(arguments[0])) {
+      switch (arguments[0]) {
+        case 'all':add 
+          items = Object.entries(data)
+        break
+        case 'tagged':
+          items = Object.entries(data)
+            .filter(item => item[1].tags.includes(arguments[1]))
+        break
+        case 'checked':
+          items = Object.entries(data)
+            .filter(item => item[1].status)
+        break
+        case 'unchecked':
+          items = Object.entries(data)
+            .filter(item => !item[1].status)
+        break
+      }
+       }else {
+      items = Object.entries(data)
+        .filter(item => item[1].tags.includes(term))
+    }
+  } else {
+    items = Object.entries(data)
+  }
+  console.log(data.title)
+  
+ }
+
+
+
+/** 
+ * adds tasks
+ * 
+ * @param  {string} title 
+ * @returns 
+ */
+function add(title){
+  let data = load()
+  data = {
+    title: title,
+    tags: [],
+    status: false
+  }
+  counter++
+  fs.writeFileSync('data/counter.txt', counter.toString())
+  file='data/data.json'
+  return fs.writeFileSync(file, JSON.stringify(data))
 }
 
 // The following line starts the application

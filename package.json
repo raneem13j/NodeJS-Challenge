@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/raneem13j/NodeJS-Challenge/issues"
   },
-  "homepage": "https://github.com/raneem13j/NodeJS-Challenge#readme"
+  "homepage": "https://github.com/raneem13j/NodeJS-Challenge#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
