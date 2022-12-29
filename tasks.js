@@ -33,15 +33,27 @@ function startApp(name){
  * @param  {string} text data typed by the user
  * @returns {void}
  */
+// function onDataReceived(text) {
+//   if (text === 'quit\n', text === 'exit\n') {
+//     quit();
+//   }
+//   else if(text === 'hello\n'){
+//     hello();
+//   }else if(text === 'help\n'){
+//     help();
+//   }
+//   else{
+//     unknownCommand(text);
+//   }
+// }
 function onDataReceived(text) {
-  if (text === 'quit\n', text === 'exit\n') {
-    quit();
+  text = text.replace("\n","");
+  let res = text.split(" ")[0];
+  let x;
+  if (res == "hello"){
+    hello(x)
   }
-  else if(text === 'hello\n'){
-    hello();
-  }else if(text === 'help\n'){
-    help();
-  }
+ 
   else{
     unknownCommand(text);
   }
@@ -65,9 +77,10 @@ function unknownCommand(c){
  *
  * @returns {void}
  */
-function hello(){
-  console.log('hello!')
+function hello(x){
+  console.log('hello' + x + "!")
 }
+
 /**lists commands
  * 
  * @returns {Void}
@@ -88,4 +101,8 @@ function quit(){
 
 // The following line starts the application
 startApp("Raneem Aljamal")
-  
+// if(text.split(" ")[1] == undefined){
+//   x= ""
+// }else {
+//   x = " " + text.split(" ")[1]
+// }
