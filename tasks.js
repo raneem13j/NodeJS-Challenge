@@ -39,7 +39,8 @@ function onDataReceived(text) {
   let x;
   if (text === 'quit', text === 'exit') {
     quit();
-  } else if(text === 'help'){
+  }
+  else if(text === 'help'){
     help();
   }
   else if (res == "hello"){
