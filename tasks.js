@@ -158,6 +158,8 @@ function remove(index) {
   // If no index is provided, remove the last element of the list
   if (index === undefined) {
    console.log(tasks.length - 1);
+  }if(index > tasks.length){
+    console.log("this task's number dose not exist")
   }
   else{
 console.log(tasks.splice(index-1, 1));
