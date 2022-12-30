@@ -62,6 +62,9 @@ function onDataReceived(text) {
   }else if(res === 'add'){
     add(x)
   }
+  else if(res === 'remove'){
+    remove(x)
+  }
   else{
     unknownCommand(text);
   }
@@ -132,15 +135,46 @@ console.log(i + 1 + ": " + tasks[i]);
 
 
 const tasks = []; // create an empty array to store the tasks
-
+/**
+ * 
+ *adds task to the list
+ * 
+ */
 function add(task) {
   if (!task) { // if no task is provided
-    console.error("Please provide a task to add"); // print an error message
+    console.error("Error: Please provide a task to add"); // print an error message
   } else {
     tasks.push(task); // add the task to the array
     console.log(`'${task}' added to the list`); // print a confirmation message
   }
 }
+
+
+function remove(index) {
+  // If no index is provided, remove the last element of the list
+  if (index === undefined) {
+   console.log(tasks.length - 1);
+  }
+  else{
+console.log(tasks.splice(index-1, 1));
+  }
+  // Use splice to remove the element at the specified index
+  
+}
+
+// Example usage:
+
+
+
+// remove(tasks); // Removes the last element ('task 3')
+// console.log(tasks); // ['task 1', 'task 2']
+
+// remove(tasks, 0); // Removes the first element ('task 1')
+// console.log(tasks); // ['task 2']
+
+// remove(tasks, 1); // Removes the second element ('task 2')
+// console.log(tasks); // []
+
 
 // The following line starts the application
 startApp("Raneem Aljamal")
