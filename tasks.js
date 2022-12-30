@@ -108,7 +108,7 @@ function quit(){
  * 
  */
 function help(){
-  console.log('hello\n' + 'quit\n' + 'exit\n' + 'help')
+  console.log('hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove')
 }
 
 /**
@@ -149,7 +149,11 @@ function add(task) {
   }
 }
 
-
+/**
+ * 
+ * removes tasks
+ * 
+ */
 function remove(index) {
   // If no index is provided, remove the last element of the list
   if (index === undefined) {
@@ -162,18 +166,6 @@ console.log(tasks.splice(index-1, 1));
   
 }
 
-// Example usage:
-
-
-
-// remove(tasks); // Removes the last element ('task 3')
-// console.log(tasks); // ['task 1', 'task 2']
-
-// remove(tasks, 0); // Removes the first element ('task 1')
-// console.log(tasks); // ['task 2']
-
-// remove(tasks, 1); // Removes the second element ('task 2')
-// console.log(tasks); // []
 
 
 // The following line starts the application
