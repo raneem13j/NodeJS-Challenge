@@ -84,6 +84,10 @@ function quit(){
   process.exit();
 }
 
+/**
+ * lists commands
+ * 
+ */
 function help(){
   console.log('hello\n' + 'quit\n' + 'exit\n' + 'help')
 }
