@@ -34,6 +34,11 @@
  * @returns {void}
  */
 function onDataReceived(text) {
+  text = text.replace("\n","");
+  var array = text.split(" ")
+  let res = array[0];
+  array.shift()
+  let x = array.join(" ");
   if (text === 'quit\n') {
     quit();
   }
@@ -43,8 +48,13 @@ function onDataReceived(text) {
   else if(text === 'help\n'){
     help()
   }
-  else if(text === 'hello\n'){
-    hello();
+  else if (res == "hello"){
+    if(text.split(" ")[1] == undefined){
+      x= ""
+    }else {
+      x = " " + text.split(" ")[1]
+    }
+    hello(x)
   }
   else{
     unknownCommand(text);
@@ -91,6 +101,12 @@ function quit(){
 function help(){
   console.log('hello\n' + 'quit\n' + 'exit\n' + 'help')
 }
+
+
+function hello(x){
+  console.log('hello' + x + "!")
+}
+
 
 // The following line starts the application
 startApp("Raneem Aljamal")
