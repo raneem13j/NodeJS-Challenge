@@ -1,4 +1,5 @@
-
+var fs = require('fs');
+const { title } = require('process');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -16,6 +17,8 @@
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 }
+
+
 
 /**
  * Decides what to do depending on the data that was received
@@ -56,6 +59,8 @@ function onDataReceived(text) {
     hello(x)
   }else if(res === 'list'){
     list(x)
+  }else if(res === 'add'){
+    add(x)
   }
   else{
     unknownCommand(text);
@@ -112,13 +117,29 @@ function hello(x){
   console.log('hello' + x + "!")
 }
 
-var tasks = ["Task 1: Buy groceries", "Task 2: Clean the house", "Task 3: Finish project report"];
+/**
+ * lists all tasks
+ * 
+ */
+// var tasks = ["Buy groceries", "Clean the house", "Finish project report"];
 
 function list() {
 console.log("Task List:");
 for (var i = 0; i < tasks.length; i++) {
 console.log(i + 1 + ": " + tasks[i]);
 }
+}
+
+
+const tasks = []; // create an empty array to store the tasks
+
+function add(task) {
+  if (!task) { // if no task is provided
+    console.error("Please provide a task to add"); // print an error message
+  } else {
+    tasks.push(task); // add the task to the array
+    console.log(`'${task}' added to the list`); // print a confirmation message
+  }
 }
 
 // The following line starts the application
