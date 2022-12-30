@@ -1,3 +1,4 @@
+const { Console } = require('console');
 const fs = require('fs');
 /**
  * Starts the application
@@ -22,13 +23,15 @@ let counter = parseFloat(fs.readFileSync('data/counter.txt')) || 0
 // //.convert number. to base36-
 const toBase36 = number => parseInt(number).toString(36)
 
-// // convert number from base36-
-// const fromBase36 = number => parseInt(number, 36)
+// convert number from base36-
+const fromBase36 = number => parseInt(number, 36)
 
-// save: save current.list-
-// function save(data={}, file='data/data.json') {
-
-// }
+//save: save current.list-
+function save(data={}, file='data/data.json') {
+fs.writeFileSync('data/counter.txt', counter.toString())
+  file='data/data.json'
+  return fs.writeFileSync(file, JSON.stringify(data))
+}
 
 // load: load. from.JSON-
 function load(file='data/data.json') {
@@ -40,7 +43,10 @@ text.length
 )
 }
 const keywords = [
-  'all'
+  'all',
+  'tagged',
+  'checked',
+  'unchecked'
 ]
 /**
  * Decides what to do depending on the data that was received
@@ -72,12 +78,23 @@ function onDataReceived(text) {
   else if(text === 'help'){
     help();
   }
-  else if(text === 'list'){
+  else if(res === 'list'){
     list();
   }
+  else if(res === 'remove'){
+    if(text.split(" ")[1] == undefined){
+      console.log("error")
+    }else {
+    remove(x)
+  }
+}
   else if(res === 'add'){
+    if(text.split(" ")[1] == undefined){
+      console.log("error")
+    }else {
     add(x);
   }
+}
   else if (res == "hello"){
     if(text.split(" ")[1] == undefined){
       x= ""
@@ -153,7 +170,7 @@ function quit(){
         break
         case 'unchecked':
           items = Object.entries(data)
-            .filter(item => !item[1].status)
+            .filter(item => !item[1].statulists)
         break
       }
        }else {
@@ -180,13 +197,56 @@ function add(title){
   data = {
     title: title,
     tags: [],
-    status: false
-  }
+    status: false}
   counter++
-  fs.writeFileSync('data/counter.txt', counter.toString())
-  file='data/data.json'
-  return fs.writeFileSync(file, JSON.stringify(data))
-}
+  console.log(save(data))
+  
+ }
+
+  /**
+   *   
+   * removes tasks
+   * 
+   * @param {string} term 
+   */
+  function remove(term) {
+    let data = load()
+    let array = term.split(' ')
+    let res = array[0];
+    let terms = array.join(" ");
+    if (keywords.includes(terms[0])) {
+      switch (terms[0]) {
+        case 'all':
+          data = {}
+        break
+        case 'tagged':
+          for (let task in data) {
+            if (task[1].tag.includes(terms[1])) {
+              delete data[task]
+            }
+          }
+        break
+        case 'checked':
+          for (let task in data) {
+            if (data[task].status) {
+              delete data[task]
+            }
+          }
+        break
+        case 'unchecked':
+          for (let task in data) {
+            if (!data[task].status) {
+              delete data[task]
+            }
+          }
+        break
+      }
+    } else if (data[fromBase36(term)]) {
+      delete data[fromBase36(term)]
+    }
+    console.log((data + 'removed'))
+  }
+
 
 // The following line starts the application
 startApp("Raneem Aljamal")
