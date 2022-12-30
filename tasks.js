@@ -1,5 +1,4 @@
-const { Console } = require('console');
-const fs = require('fs');
+
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -10,7 +9,7 @@ const fs = require('fs');
  * @param  {string} name the name of the app
  * @returns {void}
  */
-function startApp(name){
+ function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
@@ -18,36 +17,7 @@ function startApp(name){
   console.log("--------------------")
 }
 
-let counter = parseFloat(fs.readFileSync('data/counter.txt')) || 0
 
-// //.convert number. to base36-
-const toBase36 = number => parseInt(number).toString(36)
-
-// convert number from base36-
-const fromBase36 = number => parseInt(number, 36)
-
-//save: save current.list-
-function save(data={}, file='data/data.json') {
-fs.writeFileSync('data/counter.txt', counter.toString())
-  file='data/data.json'
-  return fs.writeFileSync(file, JSON.stringify(data))
-}
-
-// load: load. from.JSON-
-function load(file='data/data.json') {
-const text = fs.readFileSync(file)
-return JSON.parse(
-text.length
-? text
-:'{}'
-)
-}
-const keywords = [
-  'all',
-  'tagged',
-  'checked',
-  'unchecked'
-]
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -64,49 +34,18 @@ const keywords = [
  * @returns {void}
  */
 function onDataReceived(text) {
-  text = text.replace("\n","");
-  var array = text.split(" ")
-  let res = array[0];
-  array.shift()
-  let x = array.join(" ");
-  if (text === 'exit') {
+  if (text === 'quit\n') {
     quit();
   }
-  else if(text === 'quit'){
-    quit();
-  }
-  else if(text === 'help'){
-    help();
-  }
-  else if(res === 'list'){
-    list();
-  }
-  else if(res === 'remove'){
-    if(text.split(" ")[1] == undefined){
-      console.log("error")
-    }else {
-    remove(x)
-  }
-}
-  else if(res === 'add'){
-    if(text.split(" ")[1] == undefined){
-      console.log("error")
-    }else {
-    add(x);
-  }
-}
-  else if (res == "hello"){
-    if(text.split(" ")[1] == undefined){
-      x= ""
-    }else {
-      x = " " + text.split(" ")[1]
-    }
-    hello(x)
+  else if(text === 'hello\n'){
+    hello();
   }
   else{
     unknownCommand(text);
   }
 }
+
+
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
@@ -124,18 +63,11 @@ function unknownCommand(c){
  *
  * @returns {void}
  */
-function hello(x){
-  console.log('hello' + x + "!")
+function hello(){
+  console.log('hello!')
 }
 
-/**lists commands
- * 
- * @returns {Void}
- */
 
-function help(){
-  console.log('hello: says hello!\n' + "hello x: says hello x!\n" + 'quit: Exits the application\n' + 'exit: Exits the application\n' + 'unknownCommand: This function is supposed to run when all other commands have failed\n' + 'node tasks.js: Starts tha application\n' + 'help: lists the commands')
-}
 /**
  * Exits the application
  *
@@ -145,108 +77,6 @@ function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
 }
-/**
- * lists all tasks
- * 
- * @param {string} term 
- * 
- */
-  function list (term='all') {
-  let data = load()
-  let items = []
-  if (arguments.length > 0) {
-    if (keywords.includes(arguments[0])) {
-      switch (arguments[0]) {
-        case 'all':add 
-          items = Object.entries(data)
-        break
-        case 'tagged':
-          items = Object.entries(data)
-            .filter(item => item[1].tags.includes(arguments[1]))
-        break
-        case 'checked':
-          items = Object.entries(data)
-            .filter(item => item[1].status)
-        break
-        case 'unchecked':
-          items = Object.entries(data)
-            .filter(item => !item[1].statulists)
-        break
-      }
-       }else {
-      items = Object.entries(data)
-        .filter(item => item[1].tags.includes(term))
-    }
-  } else {
-    items = Object.entries(data)
-  }
-  console.log(data.title)
-  
- }
-
-
-
-/** 
- * adds tasks
- * 
- * @param  {string} title 
- * @returns 
- */
-function add(title){
-  let data = load()
-  data = {
-    title: title,
-    tags: [],
-    status: false}
-  counter++
-  console.log(save(data))
-  
- }
-
-  /**
-   *   
-   * removes tasks
-   * 
-   * @param {string} term 
-   */
-  function remove(term) {
-    let data = load()
-    let array = term.split(' ')
-    let res = array[0];
-    let terms = array.join(" ");
-    if (keywords.includes(terms[0])) {
-      switch (terms[0]) {
-        case 'all':
-          data = {}
-        break
-        case 'tagged':
-          for (let task in data) {
-            if (task[1].tag.includes(terms[1])) {
-              delete data[task]
-            }
-          }
-        break
-        case 'checked':
-          for (let task in data) {
-            if (data[task].status) {
-              delete data[task]
-            }
-          }
-        break
-        case 'unchecked':
-          for (let task in data) {
-            if (!data[task].status) {
-              delete data[task]
-            }
-          }
-        break
-      }
-    } else if (data[fromBase36(term)]) {
-      delete data[fromBase36(term)]
-    }
-    console.log((data + 'removed'))
-  }
-
 
 // The following line starts the application
-startApp("Raneem Aljamal")
+startApp("Jad Sarout")
