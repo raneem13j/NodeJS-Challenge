@@ -102,7 +102,11 @@ function help(){
   console.log('hello\n' + 'quit\n' + 'exit\n' + 'help')
 }
 
-
+/**
+ * says hello and hello x
+ * 
+ * @param {string} x 
+ */
 function hello(x){
   console.log('hello' + x + "!")
 }
