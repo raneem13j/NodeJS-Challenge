@@ -17,7 +17,6 @@
   console.log("--------------------")
 }
 
-
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -39,13 +38,13 @@ function onDataReceived(text) {
   let res = array[0];
   array.shift()
   let x = array.join(" ");
-  if (text === 'quit\n') {
+  if (text === 'quit') {
     quit();
   }
-  else if(text === 'exit\n'){
+  else if(text === 'exit'){
     quit()
   }
-  else if(text === 'help\n'){
+  else if(text === 'help'){
     help()
   }
   else if (res == "hello"){
@@ -55,6 +54,8 @@ function onDataReceived(text) {
       x = " " + text.split(" ")[1]
     }
     hello(x)
+  }else if(res === 'list'){
+    list(x)
   }
   else{
     unknownCommand(text);
@@ -111,6 +112,14 @@ function hello(x){
   console.log('hello' + x + "!")
 }
 
+var tasks = ["Task 1: Buy groceries", "Task 2: Clean the house", "Task 3: Finish project report"];
+
+function list() {
+console.log("Task List:");
+for (var i = 0; i < tasks.length; i++) {
+console.log(i + 1 + ": " + tasks[i]);
+}
+}
 
 // The following line starts the application
 startApp("Raneem Aljamal")
