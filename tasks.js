@@ -1,7 +1,17 @@
 var fs = require('fs');
-var data = fs.readFileSync('database.json');
-var tasks = JSON.parse(data)
-console.log(tasks);
+// Get the file name from the command-line arguments
+const fileName = process.argv[2] || 'database.json';
+
+var fileContents
+// Read the file contents
+if (fs.existsSync(fileName)) {
+  fileContents = fs.readFileSync(fileName, 'utf8');
+} else {
+  fs.writeFileSync(fileName, "[]")
+  fileContents = fs.readFileSync(fileName, 'utf8');
+}
+// Parse the file contents as JSON
+const tasks = JSON.parse(fileContents);
 
 
 const { title } = require('process');
@@ -77,7 +87,7 @@ function onDataReceived(text) {
   }else if(res === 'add'){
     array.shift()
     let x = array.join(" ");
-    add(x)
+    add(x, false)
   }
   else if(res === 'remove'){
     array.shift()
@@ -167,12 +177,11 @@ function add(name, done) {
   
   if(!name && !done){
     console.error('Error: Please provide a task to add');
-  }else {
-  tasks.push({ name, done });
-  console.log(`'${name}' added to the list`); // print a confirmation message
-  var data = JSON.stringify(tasks, null, 2);
-  fs.writeFileSync('database.json', data, finished);
-  
+  } else {
+    tasks.push({ name, done });
+    console.log(`'${name}' added to the list`); // print a confirmation message
+    var data = JSON.stringify(tasks, null, 2);
+    fs.writeFileSync(fileName, data, finished);
   }
 }
 
@@ -200,7 +209,7 @@ function remove(index) {
  */
 function edit(i, newTitle) {
    if(!i && !newTitle){
-    console.log('Error: add the new text')
+      console.log('Error: add the new text')
    }
    else if(i >= 0 && i < tasks.length){
      tasks[i-1].name = newTitle
@@ -215,8 +224,11 @@ function checkTask(index) {
   if(!index){
     console.error('Error: no task index provided')
   }else{
-  tasks[index-1].done = true;
+    tasks[index-1].done = true;
+    var data = JSON.stringify(tasks, null, 2);
+    fs.writeFileSync(fileName, data, finished);
  }
+  
 }
 /**
  * 
@@ -228,6 +240,8 @@ function uncheckTask(index) {
     console.error('Error: no task index provided')
   }else{
   tasks[index-1].done = false;
+  var data = JSON.stringify(tasks, null, 2);
+    fs.writeFileSync(fileName, data, finished);
 }
 }
 // The following line starts the application
