@@ -129,7 +129,7 @@ function quit(){
  * 
  */
 function help(){
-  console.log('list of commands:\n' + 'hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove\n' + 'edit')
+  console.log('..........\n' + 'list of commands:\n' + 'hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove\n' + 'edit\n' + 'check\n' + 'uncheck\n' + '..........')
 }
 
 /**
