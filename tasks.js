@@ -1,5 +1,11 @@
 var fs = require('fs');
+var data = fs.readFileSync('database.json');
+var tasks = JSON.parse(data)
+console.log(tasks);
+
+
 const { title } = require('process');
+const { finished } = require('stream');
 const { isUndefined } = require('util');
 /**
  * Starts the application
@@ -18,9 +24,15 @@ const { isUndefined } = require('util');
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 }
-
-
-
+/**
+ * lists of tasks
+ */
+// const tasks = [
+//   { name: "Do laundry", done: true },
+//   { name: "Buy groceries", done: false },
+//   { name: "Take out the trash", done: true},
+//   { name: "clean your room", done:false}
+// ];
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -90,8 +102,6 @@ function onDataReceived(text) {
     unknownCommand(text);
   }
 }
-
-
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
@@ -102,8 +112,6 @@ function onDataReceived(text) {
 function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
 }
-
-
 /**
  * Says hello
  *
@@ -112,8 +120,6 @@ function unknownCommand(c){
 function hello(){
   console.log('hello!')
 }
-
-
 /**
  * Exits the application
  *
@@ -123,7 +129,6 @@ function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
 }
-
 /**
  * lists commands
  * 
@@ -131,7 +136,6 @@ function quit(){
 function help(){
   console.log('..........\n' + 'list of commands:\n' + 'hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove\n' + 'edit\n' + 'check\n' + 'uncheck\n' + '..........')
 }
-
 /**
  * says hello and hello x
  * 
@@ -140,7 +144,6 @@ function help(){
 function hello(x){
   console.log('hello' + x + "!")
 }
-
 /**
  * lists all tasks
  * 
@@ -156,27 +159,23 @@ function list() {
   }
 }
 /**
- * a list of tasks
- */
-const tasks = [
-  { name: "Do laundry", done: true },
-  { name: "Buy groceries", done: false },
-  { name: "Take out the trash", done: true},
-  { name: "clean your room", done:false}
-];
-/**
  * 
  *adds task to the list
  * 
  */
 function add(name, done) {
+  
   if(!name && !done){
     console.error('Error: Please provide a task to add');
   }else {
   tasks.push({ name, done });
   console.log(`'${name}' added to the list`); // print a confirmation message
+  var data = JSON.stringify(tasks, null, 2);
+  fs.writeFileSync('database.json', data, finished);
+  
+  }
 }
-}
+
 /**
  * 
  * removes tasks
