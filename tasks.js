@@ -137,31 +137,38 @@ function hello(x){
  * lists all tasks
  * 
  */
-// var tasks = ["Buy groceries", "Clean the house", "Finish project report"];
-
 function list() {
- console.log("Task List:");
- for (var i = 0; i < tasks.length; i++) {
- console.log(i + 1 + ": " + tasks[i]);
- }
+  for (let i = 0; i < tasks.length; i++) {
+    const task = tasks[i];
+    let doneMarker = "[ ]";
+    if (task.done) {
+      doneMarker = "[✓]";
+    }
+    console.log(i + 1 + ": " + `${doneMarker} ${task.name}`);
+  }
 }
-
-
-const tasks = []; // create an empty array to store the tasks
+/**
+ * a list of tasks
+ */
+const tasks = [
+  { name: "Do laundry", done: true },
+  { name: "Buy groceries", done: false },
+  { name: "Take out the trash", done: true},
+  { name: "clean your room", done:false}
+];
 /**
  * 
  *adds task to the list
  * 
  */
-function add(task) {
-  if (!task) { // if no task is provided
-    console.error("Error: Please provide a task to add"); // print an error message
-  } else {
-    tasks.push(task); // add the task to the array
-    console.log(`'${task}' added to the list`); // print a confirmation message
-  }
+function add(name, done) {
+  if(!name && !done){
+    console.error('Error: Please provide a task to add');
+  }else {
+  tasks.push({ name, done });
+  console.log(`'${name}' added to the list`); // print a confirmation message
 }
-
+}
 /**
  * 
  * removes tasks
@@ -179,8 +186,6 @@ function remove(index) {
   console.log(tasks.splice(index-1, 1));
   }
 }
-
-
 /**
  * 
  * edits the tasks name
@@ -188,19 +193,12 @@ function remove(index) {
  */
 function edit(i, newTitle) {
    if(!i && !newTitle){
-    console.log('Error')
+    console.log('Error: add the new text')
    }
-   else if(!i){
-    console.log("test")
-    console.log(tasks[tasks.length-1] = newTitle)
-   }
-   else{
-    console.log(tasks[i-1] = newTitle)
+   else if(i >= 0 && i < tasks.length){
+     tasks[i-1].name = newTitle
    }
 
 } 
-
-
-
 // The following line starts the application
 startApp("Raneem Aljamal")
