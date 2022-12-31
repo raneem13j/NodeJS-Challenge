@@ -77,6 +77,14 @@ function onDataReceived(text) {
     array.shift()
     let newTitle = array.join(" ");
      edit(i, newTitle)
+  }else if(res === 'check'){
+    array.shift()
+    let x = array.join(" ");
+    checkTask(x)
+  }else if(res === 'uncheck'){
+    array.shift()
+    let x = array.join(" ");
+    uncheckTask(x)
   }
   else{
     unknownCommand(text);
@@ -198,7 +206,41 @@ function edit(i, newTitle) {
    else if(i >= 0 && i < tasks.length){
      tasks[i-1].name = newTitle
    }
-
 } 
+/**
+ * 
+ * check the tasks
+ * 
+ */
+function checkTask(index) {
+  if(!index){
+    console.error('Error: no task index provided')
+  }else{
+  tasks[index-1].done = true;
+ }
+}
+/**
+ * 
+ * uncheck the tasks
+ * 
+ */
+function uncheckTask(index) {
+  if(!index){
+    console.error('Error: no task index provided')
+  }else{
+  tasks[index-1].done = false;
+}
+}
+// function check(index) {
+//   if (index !== undefined) {
+//     checkTask(index-1);
+//   } 
+//  }
+// function uncheck(index) {
+//   if (index !== undefined) {
+//     uncheckTask(index-1);
+//   } 
+// }
+
 // The following line starts the application
 startApp("Raneem Aljamal")
