@@ -231,16 +231,5 @@ function uncheckTask(index) {
   tasks[index-1].done = false;
 }
 }
-// function check(index) {
-//   if (index !== undefined) {
-//     checkTask(index-1);
-//   } 
-//  }
-// function uncheck(index) {
-//   if (index !== undefined) {
-//     uncheckTask(index-1);
-//   } 
-// }
-
 // The following line starts the application
 startApp("Raneem Aljamal")
