@@ -1,5 +1,6 @@
 var fs = require('fs');
 const { title } = require('process');
+const { isUndefined } = require('util');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -39,8 +40,6 @@ function onDataReceived(text) {
   text = text.replace("\n","");
   var array = text.split(" ")
   let res = array[0];
-  array.shift()
-  let x = array.join(" ");
   if (text === 'quit') {
     quit();
   }
@@ -50,7 +49,9 @@ function onDataReceived(text) {
   else if(text === 'help'){
     help()
   }
-  else if (res == "hello"){
+  else if (res === "hello"){
+    array.shift()
+    let x = array.join(" ");
     if(text.split(" ")[1] == undefined){
       x= ""
     }else {
@@ -58,12 +59,24 @@ function onDataReceived(text) {
     }
     hello(x)
   }else if(res === 'list'){
+    array.shift()
+    let x = array.join(" ");
     list(x)
   }else if(res === 'add'){
+    array.shift()
+    let x = array.join(" ");
     add(x)
   }
   else if(res === 'remove'){
+    array.shift()
+    let x = array.join(" ");
     remove(x)
+  }else if(res === 'edit'){
+    let i = array[1]
+    array.shift()
+    array.shift()
+    let newTitle = array.join(" ");
+     edit(i, newTitle)
   }
   else{
     unknownCommand(text);
@@ -108,7 +121,7 @@ function quit(){
  * 
  */
 function help(){
-  console.log('hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove')
+  console.log('list of commands:\n' + 'hello\n' + 'quit\n' + 'exit\n' + 'help\n' + 'add\n' + 'list\n' + 'remove\n' + 'edit')
 }
 
 /**
@@ -127,10 +140,10 @@ function hello(x){
 // var tasks = ["Buy groceries", "Clean the house", "Finish project report"];
 
 function list() {
-console.log("Task List:");
-for (var i = 0; i < tasks.length; i++) {
-console.log(i + 1 + ": " + tasks[i]);
-}
+ console.log("Task List:");
+ for (var i = 0; i < tasks.length; i++) {
+ console.log(i + 1 + ": " + tasks[i]);
+ }
 }
 
 
@@ -162,11 +175,30 @@ function remove(index) {
     console.log("this task's number dose not exist")
   }
   else{
-console.log(tasks.splice(index-1, 1));
-  }
   // Use splice to remove the element at the specified index
-  
+  console.log(tasks.splice(index-1, 1));
+  }
 }
+
+
+/**
+ * 
+ * edits the tasks name
+ * 
+ */
+function edit(i, newTitle) {
+   if(!i && !newTitle){
+    console.log('Error')
+   }
+   else if(!i){
+    console.log("test")
+    console.log(tasks[tasks.length-1] = newTitle)
+   }
+   else{
+    console.log(tasks[i-1] = newTitle)
+   }
+
+} 
 
 
 
